@@ -5,7 +5,7 @@ import sys
 from prometheus_api_client import MetricRangeDataFrame, PrometheusConnect
 from properties.properties import get_property
 
-PROMETHEUS_URL = f'{get_property("prometheus.ip")}:{get_property("prometheus.port")}'
+PROMETHEUS_URL = get_property("prometheus.url")
 
 
 def main():
