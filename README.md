@@ -39,7 +39,6 @@ The service demands were calculated from directly measured CPU utilization of th
 5. Warmup the TeaStore for several hours with `warmup.sh` (use the screen utility to keep the session alive)
 6. Install k6 https://grafana.com/docs/k6/latest/set-up/install-k6
 7. Build a k6 binary with the extensions `xk6-file` and `xk6-fasthttp` and place it next to `calibration.sh` https://grafana.com/docs/k6/latest/extensions/build-k6-binary-using-go/
-8. Run the `data_generation/generate_resources.py` script
 9. Run the experiment script `calibration.sh <number_runs>` (Specify the number of runs, use the screen utility)
 10. Find the outputs in the generated folder `outputs/<TIMESTAMP>`
 

@@ -11,10 +11,17 @@ times_csv_file="$output_dir/times.csv"
 
 mkdir -p $output_dir
 
+# Add header to output csv files
 echo "service,endpoint,rps,mean" > $output_file
 echo "timestamp,call_index" > $times_csv_file
 
 source .venv/bin/activate
+
+# Generate session blobs file if it does not exist
+if [ ! -f "generated/sessionBlobs.json" ]; then
+
+    python3 data_generation/generate_resources.py
+fi
 
 for i in $(seq 1 $1) ; do # Replications
 
