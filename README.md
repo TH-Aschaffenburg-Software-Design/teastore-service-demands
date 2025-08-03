@@ -37,10 +37,16 @@ The service demands were calculated from directly measured CPU utilization of th
 3. Copy the content of directory `load_generation_machine/` to the machine and `cd` into it
 4. Enter all required properties into the `properties/setup.properties` file
 5. Warmup the TeaStore for several hours with `warmup.sh` (use the screen utility to keep the session alive)
-6. Install k6 https://grafana.com/docs/k6/latest/set-up/install-k6
-7. Build a k6 binary with the extensions `xk6-file` and `xk6-fasthttp` and place it next to `calibration.sh` https://grafana.com/docs/k6/latest/extensions/build-k6-binary-using-go/
-9. Run the experiment script `calibration.sh <number_runs>` (Specify the number of runs, use the screen utility)
-10. Find the outputs in the generated folder `outputs/<TIMESTAMP>`
+6. Run the experiment script `calibration.sh <number>` (Optional: specify the number of replications, use the screen utility)
+7. Find the outputs in the generated folder `outputs/<TIMESTAMP>`
+
+*If the shipped k6 binary does not work on your system:*
+
+- Build your own k6 binary with the extensions `xk6-file` and `xk6-fasthttp`.
+- This requires either Go or Docker! Setting up Go can be tedious, so building with Docker is recommended.
+- Look into https://grafana.com/docs/k6/latest/extensions/ for detailed description.
+- Place the binary next to `calibration.sh`
+
 
 ### Outputs
 
