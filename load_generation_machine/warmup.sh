@@ -1,5 +1,5 @@
 source .venv/bin/activate
 
-host=$(properties/get_property.sh kubernetes.master.ip)
+host=http://$(properties/get_property.sh kubernetes.master.ip):30080
 
-locust --config scripts/locust.conf --host $host:30080
+locust --config scripts/locust.conf --host $host
