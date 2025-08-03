@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# The script is designed to be canceled anytime 
+# The script is designed to be canceled anytime
 
 start_date=$(date -Ih | grep -Eo "[^+]+" | head -1)
 output_dir="outputs/$start_date"
@@ -16,9 +16,10 @@ echo "service,endpoint,rps,mean" > $output_file
 echo "timestamp,call_index" > $times_csv_file
 
 source .venv/bin/activate
+export PYTHONPATH=$(pwd)
 
 # Generate session blobs file if it does not exist
-if [ ! -f "generated/sessionBlobs.json" ]; then
+if [ ! -f "generated/sessionBlobs.json" ] || [ ! -f "generated/products.json" ]; then
 
     python3 data_generation/generate_resources.py
 fi
