@@ -14,14 +14,19 @@ from utils import get_service_ip
 
 def main():
 
-    os.makedirs("generated", exist_ok=True)
-    sessionblob_file = "generated/sessionBlobs.json"
+    GEN_DIR = "generated"
+    os.makedirs(GEN_DIR, exist_ok=True)
+    products_file = f"{GEN_DIR}/products.json"
+    sessionblob_file = f"{GEN_DIR}/sessionBlobs.json"
 
     auth_ip = get_service_ip("auth")
     persistence_ip = get_service_ip("persistence")
 
     product_response = get(f"http://{persistence_ip}:8080/tools.descartes.teastore.persistence/rest/products")
     products: list = product_response.json()
+
+    with open(products_file, "w") as file:
+        json.dump(products, file, indent=4)
 
     product_count = len(products)
 
