@@ -1,6 +1,5 @@
 #!/bin/bash
 
-line=$(cat properties/setup.properties | grep $1)
-value=${str#*=}
+value=$(cat properties/setup.properties | grep $1 | cut -d "=" -f2)
 
-echo -n $value
+echo $value
