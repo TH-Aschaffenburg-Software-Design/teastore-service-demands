@@ -6,12 +6,15 @@ Impl Note:
 The products are added to the shopping carts in natural order, 2 items in each shopping cart.
 """
 import json
+import os
 from requests import get, post
 
 from utils import get_service_ip
 
 
 def main():
+
+    os.makedirs("generated", exist_ok=True)
     sessionblob_file = "generated/sessionBlobs.json"
 
     auth_ip = get_service_ip("auth")
