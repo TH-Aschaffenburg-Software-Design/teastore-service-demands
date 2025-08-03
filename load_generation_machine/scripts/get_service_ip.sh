@@ -1,3 +1,5 @@
+#!/bin/bash
+
 namespace=teastore
 
 ip=$(properties/get_property.sh kubernetes.master.ip)
