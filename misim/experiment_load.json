@@ -1,0 +1,83 @@
+{
+    "simulation_meta_data": {
+        "experiment_name": "Teastore-Load-Experiment",
+        "model_name": "Teastore Load",
+        "duration": 200,
+        "seed": 1337,
+        "report_location": "D:\\Repositories\\capsule-9682966\\data"
+    },
+    "request_generators": [
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.index",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.login",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.category",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.product",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.addToCart",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.confirmOrder",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.profile",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        },
+        {
+            "type": "limbo",
+            "config": {
+                "operation": "webui.logout",
+                "limbo_model": "intensity_profile.csv",
+                "repeating": false,
+                "repetition_skip": 5
+            }
+        }
+    ]
+}

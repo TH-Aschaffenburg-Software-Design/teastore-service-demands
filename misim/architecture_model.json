@@ -1,0 +1,411 @@
+{
+    "microservices": [
+        {
+            "name": "persistence",
+            "instances": 1,
+            "capacity": 10000,
+            "s_patterns": [
+                {
+                    "type": "autoscaling",
+                    "strategy": {
+                        "type": "reactive"
+                    },
+                    "maxInstances": 1
+                }
+            ],
+            "operations": [
+                {
+                    "name": "findAllCategories",
+                    "demand": 7
+                },
+                {
+                    "name": "findCategoryById",
+                    "demand": 3
+                },
+                {
+                    "name": "findOrdersByUser",
+                    "demand": 7
+                },
+                {
+                    "name": "createOrder",
+                    "demand": 12
+                },
+                {
+                    "name": "createOrderItem",
+                    "demand": 5
+                },
+                {
+                    "name": "findProductById",
+                    "demand": 3
+                },
+                {
+                    "name": "listProductCategory",
+                    "demand": 11
+                },
+                {
+                    "name": "countProductCategory",
+                    "demand": 6
+                },
+                {
+                    "name": "findUserById",
+                    "demand": 6
+                }
+            ]
+        },
+        {
+            "name": "auth",
+            "instances": 1,
+            "capacity": 10000,
+            "s_patterns": [
+                {
+                    "type": "autoscaling",
+                    "strategy": {
+                        "type": "reactive"
+                    },
+                    "maxInstances": 1
+                }
+            ],
+            "operations": [
+                {
+                    "name": "placeOrder",
+                    "demand": 32,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "createOrder"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "createOrderItem"
+                        }
+                    ]
+                },
+                {
+                    "name": "login",
+                    "demand": 95,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findUserById"
+                        }
+                    ]
+                },
+                {
+                    "name": "logout",
+                    "demand": 4
+                },
+                {
+                    "name": "isloggedin",
+                    "demand": 7
+                },
+                {
+                    "name": "cartAdd",
+                    "demand": 13,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findProductById"
+                        }
+                    ]
+                },
+                {
+                    "name": "cartRemove",
+                    "demand": 7
+                },
+                {
+                    "name": "cartUpdate",
+                    "demand": 7
+                }
+            ]
+        },
+        {
+            "name": "image",
+            "instances": 1,
+            "capacity": 10000,
+            "s_patterns": [
+                {
+                    "type": "autoscaling",
+                    "strategy": {
+                        "type": "reactive"
+                    },
+                    "maxInstances": 1
+                }
+            ],
+            "operations": [
+                {
+                    "name": "getProductImages",
+                    "demand": 4
+                },
+                {
+                    "name": "getWebUIImages",
+                    "demand": 2
+                }
+            ]
+        },
+        {
+            "name": "recommender",
+            "instances": 1,
+            "capacity": 10000,
+            "s_patterns": [
+                {
+                    "type": "autoscaling",
+                    "strategy": {
+                        "type": "reactive"
+                    },
+                    "maxInstances": 1
+                }
+            ],
+            "operations": [
+                {
+                    "name": "recommend",
+                    "demand": 4,
+                    "dependencies": []
+                }
+            ]
+        },
+        {
+            "name": "registry",
+            "instances": 1,
+            "capacity": 10000,
+            "operations": []
+        },
+        {
+            "name": "webui",
+            "instances": 1,
+            "capacity": 10000,
+            "s_patterns": [
+                {
+                    "type": "autoscaling",
+                    "strategy": {
+                        "type": "reactive"
+                    },
+                    "maxInstances": 1
+                }
+            ],
+            "operations": [
+                {
+                    "name": "addToCart",
+                    "demand": 33,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "cartAdd"
+                        }
+                    ]
+                },
+                {
+                    "name": "removeFromCart",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "cartRemove"
+                        }
+                    ]
+                },
+                {
+                    "name": "updateCart",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "cartUpdate"
+                        }
+                    ]
+                },
+                {
+                    "name": "proceedToCheckout",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        },
+                        {
+                            "service": "auth",
+                            "operation": "cartUpdate"
+                        }
+                    ]
+                },
+                {
+                    "name": "confirmOrder",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "placeOrder"
+                        }
+                    ]
+                },
+                {
+                    "name": "cart",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findProductById"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getWebUIImages"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "findAllCategories"
+                        },
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        },
+                        {
+                            "service": "recommender",
+                            "operation": "recommend"
+                        }
+                    ]
+                },
+                {
+                    "name": "category",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findCategoryById"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "countProductCategory"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "listProductCategory"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getProductImages"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getWebUIImages"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "findAllCategories"
+                        },
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        }
+                    ]
+                },
+                {
+                    "name": "index",
+                    "demand": 32,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findAllCategories"
+                        },
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getWebUIImages"
+                        }
+                    ]
+                },
+                {
+                    "name": "login",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "login"
+                        }
+                    ]
+                },
+                {
+                    "name": "logout",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "logout"
+                        }
+                    ]
+                },
+                {
+                    "name": "order",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findAllCategories"
+                        },
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getWebUIImages"
+                        }
+                    ]
+                },
+                {
+                    "name": "product",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "persistence",
+                            "operation": "findAllCategories"
+                        },
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "findProductById"
+                        },
+                        {
+                            "service": "recommender",
+                            "operation": "recommend"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getProductImages"
+                        }
+                    ]
+                },
+                {
+                    "name": "profile",
+                    "demand": 31,
+                    "dependencies": [
+                        {
+                            "service": "auth",
+                            "operation": "isloggedin"
+                        },
+                        {
+                            "service": "image",
+                            "operation": "getWebUIImages"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "findAllCategories"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "findUserById"
+                        },
+                        {
+                            "service": "persistence",
+                            "operation": "findOrdersByUser"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
