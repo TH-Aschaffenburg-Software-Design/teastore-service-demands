@@ -2,3 +2,4 @@
 generated/
 outputs/
 *.pyc
+k6
