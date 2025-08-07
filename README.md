@@ -51,7 +51,7 @@ The service demands were calculated from directly measured CPU utilization of th
 - `times.csv` Log file of which endpoint was executed at which time. Can be used to query prometheus with the timestamps.
 - `result.csv` Results during the experiment. Each line contains the information of one endpoint run (100s)
 - `demands.csv` The mean service demands for each endpoint over all replications.
-- `utilization.png` A diagram of the mean utilization during the measurements. The utilization should be medium, e.g. between 0.3 and 0.7. Adjust arrival rates accordingly.
+- `utilization.svg` A diagram of the mean utilization during the measurements. The utilization should be medium, e.g. between 0.3 and 0.7. Adjust arrival rates accordingly.
 
 ### Application to MiSim
 

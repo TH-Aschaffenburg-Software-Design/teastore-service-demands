@@ -13,7 +13,7 @@ df["Utilization"] = df["mean"] / 0.6
 
 # Plot utilization to check for medium utilization. Change rates in data_generation/callHierarchy.json to optimize
 ax = sns.barplot(data=df, y="endpoint", x="Utilization", orient="y")
-plt.savefig(f"{dirpath}/utilization.png")
+plt.savefig(f"{dirpath}/utilization.svg", bbox_inches="tight")
 
 # Calculate service demand using Servuice Demand Law
 df["demand"] = df["Utilization"] / df["rps"]
