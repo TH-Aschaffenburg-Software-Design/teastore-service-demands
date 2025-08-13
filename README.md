@@ -25,7 +25,7 @@ The service demands were calculated from directly measured CPU utilization of th
 
 1. Copy the content of directory `kubernetes_master/` to the machine
 2. Create the namespace `teastore`
-3. Adjust the `teastore.yml` manifest (e.g. the resource limits)
+3. Adjust the `teastore.yml` manifest (e.g. the resource limits, node taints or garbage collection params)
 4. Apply the `teastore.yml` manifest
 5. Setup kube-state-metrics and configure it to export metrics to prometheus
 
@@ -41,8 +41,8 @@ The service demands were calculated from directly measured CPU utilization of th
     - This requires either Go or Docker! Setting up Go can be tedious, so building with Docker is recommended.
     - Look into https://grafana.com/docs/k6/latest/extensions/ for detailed description
     - Place the binary next to `calibration.sh`
-7. Run the experiment script `calibration.sh <number>` (Optional: specify the number of replications, use the screen utility)
-8. Find the outputs in the generated folder `outputs/<TIMESTAMP>`
+7. Run the experiment script `calibration.sh <number=3>` (Optional: specify the number of replications, use the screen utility)
+8. Find the outputs in the generated folder `outputs/<TIMESTAMP>/`
 
 
 ### Outputs
@@ -50,8 +50,15 @@ The service demands were calculated from directly measured CPU utilization of th
 - `k6_log.log` Log file of k6 load generator. Should be empty, otherwise, parameters such as the arrival rates or virtual users have to be adjusted
 - `times.csv` Log file of which endpoint was executed at which time. Can be used to query prometheus with the timestamps.
 - `result.csv` Results during the experiment. Each line contains the information of one endpoint run (100s)
-- `demands.csv` The mean service demands for each endpoint over all replications.
-- `utilization.svg` A diagram of the mean utilization during the measurements. The utilization should be medium, e.g. between 0.3 and 0.7. Adjust arrival rates accordingly.
+- `service_demands.csv` & `service_demands.svg` The final service demands for each endpoint over all replications.
+- `utilization.svg` A diagram of the final utilization by endpoint.
+- `utilization_course.svg` The utilization by endpoint over the replications.
+
+### How to control and adjust
+
+- Resource limits should be applied depending on the environment's available resources. Adjust it in the `teastore.yml` file.
+- Garbage collection params can be applied using the `CATALINA_OPTS` variable in the `teastore.yml`.
+- The config file `data_generation/requestConfig.json` is used to specify the arrival rate for the first replication. For subsequent replications, the arrival rate is determined based on the service demands from the previous run and the specified target utilization. If the target utilization is never reached over multiple replications, lower it to a reachable value.
 
 ### Application to MiSim
 

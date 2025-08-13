@@ -3,8 +3,8 @@ import file from 'k6/x/file'
 import execution from 'k6/execution'
 import { SharedArray } from 'k6/data';
 
-const callArrayFile = "./generated/callArray.json"
-const requestData = JSON.parse(file.readFile(callArrayFile))[__ENV.REQUEST]
+const requestsFile = "./generated/requests.json"
+const requestData = JSON.parse(file.readFile(requestsFile))[__ENV.REQUEST]
 
 export const options = {
     scenarios: {
@@ -14,7 +14,7 @@ export const options = {
             timeUnit: '1s',
             duration: '125s', // 100s real timeframe, 20s warmup before and 5s buffer after
             preAllocatedVUs: Math.floor(requestData.rate / 2),
-            maxVUs: 5000
+            maxVUs: requestData.rate * 2
         },
     },
     discardResponseBodies: true, // faster
@@ -74,9 +74,12 @@ export function setup() {
 export default function (data) {
 
     let path = data.path
-    Object.entries(queryParams).forEach((entry) => {
-        path = path.replace(entry[0], entry[1]())
-    })
+    Object.entries(queryParams).forEach(([placeholder, generate]) => {
+        if (path.includes(placeholder)) {
+            path = path.split(placeholder).join(generate());
+        }
+    });
+
     const fullUrl = data.endpoint + path
 
     let body = null
@@ -110,15 +113,15 @@ function getIntBetween(min, max) {
     return min + (iteration % range);
 }
 
-function getProductId() {
+function getProductId(offset = 0) {
     let index = getIntBetween(0, productsArray.length - 1)
+    index = (index + offset) % productsArray.length
     return productsArray[index].id
 }
 
 function getProductIdNotInCart() {
-
-    const productId = getProductId()
-    while (true) {
+    for (let i = 0; ; i++) {
+        const productId = getProductId(i)
         let id = (productId + 1) % productsArray.length
         if (sessionBlobs[getIntBetween(0, 99)].orderItems.find(e => e.productId === id) === undefined) {
             return id

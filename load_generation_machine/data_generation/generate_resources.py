@@ -7,8 +7,8 @@ The products are added to the shopping carts in natural order, 2 items in each s
 """
 import json
 import os
-from requests import get, post
 
+from requests import get, post
 from utils import get_service_ip
 
 

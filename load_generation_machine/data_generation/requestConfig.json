@@ -1,14 +1,14 @@
 {
     "options": {
-        "default_rate": 500
+        "target_utilization": 0.25,
+        "start_rate": 500
     },
     "services": {
         "persistence": {
             "categories/": [
                 {},
                 {
-                    "path": "{category_id}",
-                    "rate": 1000
+                    "path": "{category_id}"
                 }
             ],
             "orders/": [
@@ -17,25 +17,21 @@
                 },
                 {
                     "method": "POST",
-                    "body": "order",
-                    "rate": 400
+                    "body": "order"
                 }
             ],
             "orderitems/": [
                 {
                     "method": "POST",
-                    "body": "orderItem",
-                    "rate": 700
+                    "body": "orderItem"
                 }
             ],
             "products/": [
                 {
-                    "path": "{product_id}",
-                    "rate": 1000
+                    "path": "{product_id}"
                 },
                 {
-                    "path": "category/{category_id}?start={start}&max={max}",
-                    "rate": 400
+                    "path": "category/{category_id}?start={start}&max={max}"
                 },
                 {
                     "path": "count/{category_id}"
@@ -52,20 +48,17 @@
                 {
                     "method": "POST",
                     "path": "placeorder?{order_details}",
-                    "body": "blob",
-                    "rate": 150
+                    "body": "blob"
                 },
                 {
                     "method": "POST",
                     "path": "login?name=user{user_num}&password=password",
-                    "body": {},
-                    "rate": 50
+                    "body": {}
                 },
                 {
                     "method": "POST",
                     "path": "logout",
-                    "body": "blob",
-                    "rate": 700
+                    "body": "blob"
                 },
                 {
                     "method": "POST",
@@ -77,8 +70,7 @@
                 {
                     "method": "POST",
                     "path": "add/{product_id_not_in_cart}",
-                    "body": "blob",
-                    "rate": 300
+                    "body": "blob"
                 },
                 {
                     "method": "POST",
@@ -97,8 +89,7 @@
                 {
                     "method": "POST",
                     "path": "{user_id}",
-                    "body": "orderItemArray",
-                    "rate": 800
+                    "body": "orderItemArray"
                 }
             ]
         },
@@ -107,81 +98,62 @@
                 {
                     "method": "POST",
                     "path": "getProductImages",
-                    "body": "productImages",
-                    "rate": 1200
+                    "body": "productImages"
                 },
                 {
                     "method": "POST",
                     "path": "getWebImages",
-                    "body": "webImages",
-                    "rate": 800
+                    "body": "webImages"
                 }
             ]
         },
         "webui": {
             "cartAction?": [
                 {
-                    "path": "addToCart=&productid={product_id}",
-                    "rate": 150
+                    "path": "addToCart=&productid={product_id}"
                 },
                 {
-                    "path": "removeProduct={product_id_in_cart}",
-                    "rate": 150
+                    "path": "removeProduct={product_id_in_cart}"
                 },
                 {
-                    "path": "cartupdateCartQuantities=",
-                    "rate": 150
+                    "path": "cartupdateCartQuantities="
                 },
                 {
-                    "path": "proceedtoCheckout=",
-                    "rate": 150
+                    "path": "proceedtoCheckout="
                 },
                 {
-                    "path": "firstname=F&lastname=L&adress1=A&adress2=A&cardtype=C&cardnumber=1&expirydate=12/2050&confirm=Confirm",
-                    "rate": 150
+                    "path": "firstname=F&lastname=L&adress1=A&adress2=A&cardtype=C&cardnumber=1&expirydate=12/2050&confirm=Confirm"
                 }
             ],
             "cart/": [
-                {
-                    "rate": 150
-                }
+                {}
             ],
             "category?": [
                 {
-                    "path": "category={category_id}&page=",
-                    "rate": 150
+                    "path": "category={category_id}&page="
                 }
             ],
             "index/": [
-                {
-                    "rate": 150
-                }
+                {}
             ],
             "loginAction?": [
                 {
-                    "path": "username=user{user_num}&password=password",
-                    "rate": 150
+                    "path": "username=user{user_num}&password=password"
                 },
                 {
-                    "path": "logout=",
-                    "rate": 150
+                    "path": "logout="
                 }
             ],
             "order/": [
-                {
-                    "rate": 150
-                }
+                {}
             ],
             "product?": [
                 {
-                    "path": "id={product_id}",
-                    "rate": 150
+                    "path": "id={product_id}"
                 }
             ],
             "profile/": [
-                {
-                    "rate": 150
-                }
+                {}
             ]
         }
     }
