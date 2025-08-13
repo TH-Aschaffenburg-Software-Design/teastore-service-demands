@@ -15,7 +15,7 @@ mkdir -p $output_dir
 echo "service,endpoint,rps,mean_utilization,std_utilization,service_demand" > $result_file
 echo "timestamp,call_index" > $times_csv_file
 
-source .venv/bin/activate
+. .venv/bin/activate
 export PYTHONPATH=$(pwd)
 
 # Generate session blobs file if it does not exist
