@@ -38,7 +38,7 @@ for i in $(seq 1 $replications) ; do # Replications
         time=$(date -Iseconds)
         ./k6 run --no-usage-report --log-output file=$k6_log_file scripts/calibration.js -e REQUEST=$i
         echo "$time,$i" >> $times_csv_file
-        python3 scripts/calculate_results.py $i $time $output_dir
+        python3 scripts/process_results.py $i $time $output_dir
         sleep 5  # Pause between runs
     done
 done
