@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # The script is designed to be canceled anytime
 
