@@ -7,13 +7,11 @@ output_dir="outputs/$start_date"
 
 result_file="$output_dir/results.csv"
 k6_log_file="$output_dir/k6.log"
-times_csv_file="$output_dir/times.csv"
 
 mkdir -p $output_dir
 
 # Add header to output csv files
-echo "service,endpoint,rps,mean_utilization,std_utilization,service_demand" > $result_file
-echo "timestamp,call_index" > $times_csv_file
+echo "service,endpoint,start_time,rps,mean_utilization,std_utilization,service_demand" > $result_file
 
 . .venv/bin/activate
 export PYTHONPATH=$(pwd)
@@ -37,8 +35,7 @@ for i in $(seq 1 $replications) ; do # Replications
         echo "$i"
         time=$(date -Iseconds)
         ./k6 run --no-usage-report --log-output file=$k6_log_file scripts/calibration.js -e REQUEST=$i
-        echo "$time,$i" >> $times_csv_file
-        python3 scripts/process_results.py $i $time $output_dir
+        python3 scripts/extract_service_demand.py $i $time $output_dir
         sleep 5  # Pause between runs
     done
 done

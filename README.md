@@ -5,6 +5,10 @@ This repository offers indirectly measured service demands of the [TeaStore](htt
 ## Service Demands
 
 The service demands were calculated from directly measured CPU utilization of the TeaStore.
+We provide service demands for 3 JVM configurations:
+- Default TeaStore
+- Decreased GC pause time `-XX:MaxGCPauseMillis=100`
+- Z Garbage Collector `-XX:+UnlockExperimentalVMOptions -XX:+UseZGC`
 
 ## Reproduction
 
@@ -44,27 +48,27 @@ The service demands were calculated from directly measured CPU utilization of th
 7. Run the experiment script `calibration.sh <number=3>` (Optional: specify the number of replications, use the screen utility)
 8. Find the outputs in the generated folder `outputs/<TIMESTAMP>/`
 
-
 ### Outputs
 
 - `k6_log.log` Log file of k6 load generator. Should be empty, otherwise, parameters such as the arrival rates or virtual users have to be adjusted
-- `times.csv` Log file of which endpoint was executed at which time. Can be used to query prometheus with the timestamps.
 - `result.csv` Results during the experiment. Each line contains the information of one endpoint run (100s)
-- `service_demands.csv` & `service_demands.svg` The final service demands for each endpoint over all replications.
+- `service_demands.csv` & `service_demands.svg` The mean service demands for each endpoint over all replications.
 - `utilization.svg` A diagram of the final utilization by endpoint.
-- `utilization_course.svg` The utilization by endpoint over the replications.
+- `experiment_course.svg` The metrics by endpoint over the replications.
 
-### How to control and adjust
+### Tips and adjustments
 
 - Resource limits should be applied depending on the environment's available resources. Adjust it in the `teastore.yml` file.
 - Garbage collection params can be applied using the `CATALINA_OPTS` variable in the `teastore.yml`.
 - The config file `data_generation/requestConfig.json` is used to specify the arrival rate for the first replication. For subsequent replications, the arrival rate is determined based on the service demands from the previous run and the specified target utilization. If the target utilization is never reached over multiple replications, lower it to a reachable value.
+- The target utilization is usally hit on the 3rd replication.
+- At 3 replications and above, the first 2 replications are discarded and we calculate the final service demands using the mean of the remaining replications
 
 ### Application to MiSim
 
 The `misim` folder contains all files needed to run a [MiSim](https://github.com/Cambio-Project/MiSim) simulation of TeaStore.
 
-To insert your own service demands:
+To insert the service demands:
 
 - Find a factor to scale the service demands to integer level (e.g. 10000)
 - Insert the service demands into the `architecture_model.json`
