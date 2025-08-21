@@ -8,7 +8,7 @@ data:
     REGISTRY_HOST: "teastore-registry"
     DB_HOST: "teastore-db"
     DB_PORT: "3306"
-    CATALINA_OPTS: "-XX:+UseG1GC -Xmx512m -Xms512m -XX:MaxGCPauseMillis=100 -XX:InitiatingHeapOccupancyPercent=20"
+    CATALINA_OPTS: ""
 ---
 apiVersion: apps/v1
 kind: Deployment
