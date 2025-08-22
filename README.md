@@ -5,10 +5,11 @@ This repository offers indirectly measured service demands of the [TeaStore](htt
 ## Service Demands
 
 The service demands were calculated from directly measured CPU utilization of the TeaStore.
-We provide service demands for 3 JVM configurations:
+We provide service demands for 3 Garbage Collector configurations:
 - Default TeaStore
-- Decreased GC pause time `-XX:MaxGCPauseMillis=100`
-- Z Garbage Collector `-XX:+UnlockExperimentalVMOptions -XX:+UseZGC`
+- G1GC Optimized: Decreased GC pause time `-XX:MaxGCPauseMillis=100`
+- ZGC `-XX:+UnlockExperimentalVMOptions -XX:+UseZGC`
+
 
 ## Reproduction
 
@@ -47,6 +48,7 @@ We provide service demands for 3 JVM configurations:
     - Place the binary next to `calibration.sh`
 7. Run the experiment script `calibration.sh <number=3>` (Optional: specify the number of replications, use the screen utility)
 8. Find the outputs in the generated folder `outputs/<TIMESTAMP>/`
+9. Optionally, run a statistical comparison of different runs with the script `scripts/statistical_comparison.py`
 
 ### Outputs
 
