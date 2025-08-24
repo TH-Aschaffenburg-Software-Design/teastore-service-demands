@@ -75,3 +75,5 @@ To insert the service demands:
 - Find a factor to scale the service demands to integer level (e.g. 10000)
 - Insert the service demands into the `architecture_model.json`
 - Scale the capacity of each service (originally 1) by the same factor.
+
+On top of that, the results of 10 TeaStore experiment runs are contained as well as a visualization comparing the real application with the simulation.
