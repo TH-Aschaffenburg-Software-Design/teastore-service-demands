@@ -1,5 +1,7 @@
 # Service Demands for TeaStore
 
+[![DOI](https://zenodo.org/badge/1028204947.svg)](https://doi.org/10.5281/zenodo.16959789)
+
 This repository offers indirectly measured service demands of the [TeaStore](https://github.com/DescartesResearch/TeaStore) as well as scripts for reproduction.
 
 ## Service Demands
@@ -77,3 +79,4 @@ To insert the service demands:
 - Scale the capacity of each service (originally 1) by the same factor.
 
 On top of that, the results of 10 TeaStore experiment runs are contained as well as a visualization comparing the real application with the simulation.
+
