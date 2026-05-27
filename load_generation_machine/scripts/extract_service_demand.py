@@ -14,6 +14,7 @@ DIRPATH = sys.argv[3]
 RESULTS_FILE = "results.csv"
 PROMETHEUS_URL = get_property("prometheus.url")
 
+
 def main():
 
     requests = []
@@ -26,24 +27,27 @@ def main():
     raw_utilization = retrieve_utilization(PROMETHEUS_URL, TIME, service)
     rps = call["rate"]
 
-    utilization = raw_utilization * 0.6 # Normalize to resource limit
+    utilization = raw_utilization / 0.6  # Normalize to resource limit
     mean_utilization = utilization.mean()
     std_utilization = utilization.std()
-    service_demand = mean_utilization / rps # Service Demand Law
+    service_demand = mean_utilization / rps  # Service Demand Law
 
     result_df = pd.read_csv(f"{DIRPATH}/{RESULTS_FILE}", index_col=False)
     result_df.loc[len(result_df)] = [
-                service,
-                get_endpoint_string(call),
-                TIME.strftime("%Y-%m-%dT%H:%M:%S%:z"),
-                rps,
-                mean_utilization,
-                std_utilization,
-                service_demand
-            ]
+        service,
+        get_endpoint_string(call),
+        TIME.strftime("%Y-%m-%dT%H:%M:%S%:z"),
+        rps,
+        mean_utilization,
+        std_utilization,
+        service_demand,
+    ]
     generate_files(DIRPATH, result_df)
 
-def retrieve_utilization(prometheus_url: str, time: dt.datetime, service: str) -> pd.Series:
+
+def retrieve_utilization(
+    prometheus_url: str, time: dt.datetime, service: str
+) -> pd.Series:
 
     run_duration = 100
     warmup_before_run = 20
@@ -58,10 +62,12 @@ def retrieve_utilization(prometheus_url: str, time: dt.datetime, service: str) -
     df_service = df[df["container"] == f"teastore-{service}"]
     return df_service["value"]
 
+
 def get_endpoint_string(call: dict[str, str]):
 
     endpoint = call["endpoint"].split(".")[-1]
     return f"{call["method"]} {endpoint}{call["path"]}"
+
 
 if __name__ == "__main__":
     main()
