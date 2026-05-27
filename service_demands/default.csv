@@ -1,33 +1,33 @@
-endpoint,service_demand
-GET persistence/rest/categories/,0.00014420452987535626
-GET persistence/rest/categories/{category_id},9.841742805469597e-05
-GET persistence/rest/orders/user/{user_id},0.00016217998911404374
-GET persistence/rest/products/category/{category_id}?start={start}&max={max},0.00023383139280925625
-GET persistence/rest/products/count/{category_id},0.0001386272506632375
-GET persistence/rest/products/{product_id},0.0001034845037421375
-GET persistence/rest/users/name/user{user_num},0.00014428514788471876
-GET webui/rest/cart/,9.252454219192612e-05
-GET webui/rest/cartAction?addToCart=&productid={product_id},8.370098632711669e-05
-GET webui/rest/cartAction?cartupdateCartQuantities=,9.303211560711051e-05
-GET webui/rest/cartAction?firstname=F&lastname=L&adress1=A&adress2=A&cardtype=C&cardnumber=1&expirydate=12/2050&confirm=Confirm,9.345907830325601e-05
-GET webui/rest/cartAction?proceedtoCheckout=,9.217008130828865e-05
-GET webui/rest/cartAction?removeProduct={product_id_in_cart},9.128930126104141e-05
-GET webui/rest/category?category={category_id}&page=,9.172354639477238e-05
-GET webui/rest/index/,9.194508480619161e-05
-GET webui/rest/loginAction?logout=,9.285258427380642e-05
-GET webui/rest/loginAction?username=user{user_num}&password=password,9.337234011791192e-05
-GET webui/rest/order/,9.246319063079651e-05
-GET webui/rest/product?id={product_id},9.072889990188007e-05
-GET webui/rest/profile/,9.242022243745662e-05
-POST auth/rest/cart/add/{product_id_not_in_cart},9.216048402799253e-05
-POST auth/rest/cart/remove/{product_id_in_cart},9.276426419321962e-05
-POST auth/rest/useractions/isloggedin,9.325942302203463e-05
-POST auth/rest/useractions/login?name=user{user_num}&password=password,9.574453280173198e-05
-POST auth/rest/useractions/logout,9.319595244832449e-05
-POST auth/rest/useractions/placeorder?{order_details},8.393878038419327e-05
-POST image/rest/image/getProductImages,8.498159377766422e-05
-POST image/rest/image/getWebImages,9.525002231849884e-05
-POST persistence/rest/orderitems/,9.274670378362644e-05
-POST persistence/rest/orders/,9.312151450969149e-05
-POST recommender/rest/recommend?{user_id},8.210736927976558e-05
-PUT auth/rest/cart/{product_id_in_cart}?quantity={quantity},9.398509067474326e-05
+service,operation,service_demand
+persistence,findAllCategories,0.0011126892737291668
+persistence,findCategoryById,0.0007593937349897222
+persistence,findOrdersByUser,0.0012513888048919445
+persistence,listProductCategory,0.001804254574145
+persistence,countProductCategory,0.0010696547119072224
+persistence,findProductById,0.0007984915412197223
+persistence,findUserById,0.0011133113262708333
+webui,cart,0.0007139239366658334
+webui,addToCart,0.0006458409438819445
+webui,updateCart,0.0007178403982027777
+webui,confirmOrder,0.0007211348634508333
+webui,proceedToCheckout,0.0007111888989836112
+webui,removeFromCart,0.0007043927566436111
+webui,category,0.0007077434135397223
+webui,index,0.0007094528148625
+webui,logout,0.0007164551255694446
+webui,login,0.0007204655873294444
+webui,order,0.0007134505449905556
+webui,product,0.0007000686720822222
+webui,profile,0.0007131190002888889
+auth,cartAdd,0.000711114845895
+auth,cartRemove,0.0007157736434661111
+auth,isloggedin,0.0007195943134413889
+auth,login,0.0007387695432230556
+auth,logout,0.0007191045713602779
+auth,placeOrder,0.0006476757745691666
+image,getProductImages,0.0006557221742102778
+image,getWebUIImages,0.0007349538759141667
+persistence,createOrderItem,0.0007156381464783334
+persistence,createOrder,0.0007185302045500001
+recommender,recommend,0.0006335445160475001
+auth,cartUpdate,0.0007251936008852779
