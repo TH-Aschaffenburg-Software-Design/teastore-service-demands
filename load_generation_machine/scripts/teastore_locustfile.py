@@ -21,10 +21,7 @@ class UserBehavior(FastHttpUser):
         self.visit_home()
         self.login()
         self.browse()
-        # 50/50 chance to buy
-        choice_buy = choice([True, False])
-        if choice_buy:
-            self.buy()
+        self.buy()
         self.visit_profile()
         self.logout()
         logging.info("Completed user.")

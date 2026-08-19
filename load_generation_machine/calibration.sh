@@ -2,7 +2,7 @@
 
 # The script is designed to be canceled anytime
 
-start_date=$(date -Ih | grep -Eo "[^+]+" | head -1)
+start_date=$(date -Im | grep -Eo "[^+]+" | head -1)
 output_dir="outputs/$start_date"
 
 result_file="$output_dir/results.csv"
@@ -11,7 +11,7 @@ k6_log_file="$output_dir/k6.log"
 mkdir -p $output_dir
 
 # Add header to output csv files
-echo "service,endpoint,start_time,rps,mean_utilization,std_utilization,service_demand" > $result_file
+echo "replication,service,endpoint,start_time,rps,mean_utilization,service_demand,max_total_demand" > $result_file
 
 . .venv/bin/activate
 export PYTHONPATH=$(pwd)
@@ -24,7 +24,7 @@ fi
 
 replications=${1:-3}
 
-for i in $(seq 1 $replications) ; do # Replications
+for rep in $(seq 1 $replications) ; do # Replications
 
     # Recreate fresh database
     persistence_ip=$(scripts/get_service_ip.sh persistence)
@@ -35,7 +35,7 @@ for i in $(seq 1 $replications) ; do # Replications
         echo "$i"
         time=$(date -Iseconds)
         ./k6 run --no-usage-report --log-output file=$k6_log_file scripts/calibration.js -e REQUEST=$i
-        python3 scripts/extract_service_demand.py $i $time $output_dir
-        sleep 5  # Pause between runs
+        python3 scripts/extract_service_demand.py $i $time $output_dir $rep
+        sleep 30  # Pause between runs
     done
 done

@@ -1,4 +1,4 @@
-import { Request, Client } from "k6/x/fasthttp"
+import http from "k6/http"
 import file from 'k6/x/file'
 import execution from 'k6/execution'
 import { SharedArray } from 'k6/data';
@@ -8,7 +8,7 @@ const requestData = JSON.parse(file.readFile(requestsFile))[__ENV.REQUEST]
 
 export const options = {
     scenarios: {
-        [requestData.name]: {
+        [requestData.key]: {
             executor: 'constant-arrival-rate',
             rate: requestData.rate,
             timeUnit: '1s',
@@ -62,8 +62,6 @@ const imageArray = [
     ["300x300", () => 1]
 ]
 
-const client = new Client()
-
 let iteration = 0
 
 export function setup() {
@@ -91,17 +89,15 @@ export default function (data) {
         }
     }
 
-    const request = new Request(fullUrl)
-
     switch (data.method) {
         case "GET":
-            client.get(request)
+            http.get(fullUrl)
             break
         case "POST":
-            client.post(request, { body: body, headers: header })
+            http.post(fullUrl, body, { headers: header })
             break
         case "PUT":
-            client.put(request, { body: body, headers: header })
+            http.put(fullUrl, body, { headers: header })
             break
     }
     iteration = execution.scenario.iterationInInstance

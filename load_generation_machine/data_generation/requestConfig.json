@@ -1,44 +1,54 @@
 {
     "options": {
-        "target_utilization": 0.25,
+        "target_utilization": 0.5,
         "start_rate": 500
     },
     "services": {
         "persistence": {
             "categories/": [
-                {},
                 {
+                    "name": "getAllCategories"
+                },
+                {
+                    "name": "getCategoryById",
                     "path": "{category_id}"
                 }
             ],
             "orders/": [
                 {
+                    "name": "getOrdersByUser",
                     "path": "user/{user_id}"
                 },
                 {
+                    "name": "createOrder",
                     "method": "POST",
                     "body": "order"
                 }
             ],
             "orderitems/": [
                 {
+                    "name": "createOrderItem",
                     "method": "POST",
                     "body": "orderItem"
                 }
             ],
             "products/": [
                 {
+                    "name": "getProductById",
                     "path": "{product_id}"
                 },
                 {
+                    "name": "getProductsByCategory",
                     "path": "category/{category_id}?start={start}&max={max}"
                 },
                 {
+                    "name": "countProductsByCategory",
                     "path": "count/{category_id}"
                 }
             ],
             "users/": [
                 {
+                    "name": "getUserByName",
                     "path": "name/user{user_num}"
                 }
             ]
@@ -46,21 +56,26 @@
         "auth": {
             "useractions/": [
                 {
+                    "name": "placeOrder",
                     "method": "POST",
                     "path": "placeorder?{order_details}",
                     "body": "blob"
                 },
                 {
+                    "name": "login",
                     "method": "POST",
                     "path": "login?name=user{user_num}&password=password",
-                    "body": {}
+                    "body": {},
+                    "rate": 20
                 },
                 {
+                    "name": "logout",
                     "method": "POST",
                     "path": "logout",
                     "body": "blob"
                 },
                 {
+                    "name": "isLoggedIn",
                     "method": "POST",
                     "path": "isloggedin",
                     "body": "blob"
@@ -68,16 +83,19 @@
             ],
             "cart/": [
                 {
+                    "name": "addToCart",
                     "method": "POST",
                     "path": "add/{product_id_not_in_cart}",
                     "body": "blob"
                 },
                 {
+                    "name": "removeFromCart",
                     "method": "POST",
                     "path": "remove/{product_id_in_cart}",
                     "body": "blob"
                 },
                 {
+                    "name": "updateQuantityInCart",
                     "method": "PUT",
                     "path": "{product_id_in_cart}?quantity={quantity}",
                     "body": "blob"
@@ -87,6 +105,7 @@
         "recommender": {
             "recommend?": [
                 {
+                    "name": "recommend",
                     "method": "POST",
                     "path": "{user_id}",
                     "body": "orderItemArray"
@@ -96,11 +115,13 @@
         "image": {
             "image/": [
                 {
+                    "name": "getProductImages",
                     "method": "POST",
                     "path": "getProductImages",
                     "body": "productImages"
                 },
                 {
+                    "name": "getWebImages",
                     "method": "POST",
                     "path": "getWebImages",
                     "body": "webImages"
@@ -110,50 +131,67 @@
         "webui": {
             "cartAction?": [
                 {
+                    "name": "addToCart",
                     "path": "addToCart=&productid={product_id}"
                 },
                 {
+                    "name": "removeFromCart",
                     "path": "removeProduct={product_id_in_cart}"
                 },
                 {
+                    "name": "updateCartQuantities",
                     "path": "cartupdateCartQuantities="
                 },
                 {
+                    "name": "proceedToCheckout",
                     "path": "proceedtoCheckout="
                 },
                 {
+                    "name": "placeOrder",
                     "path": "firstname=F&lastname=L&adress1=A&adress2=A&cardtype=C&cardnumber=1&expirydate=12/2050&confirm=Confirm"
                 }
             ],
             "cart/": [
-                {}
+                {
+                    "name": "getCart"
+                }
             ],
             "category?": [
                 {
+                    "name": "getCategoryById",
                     "path": "category={category_id}&page="
                 }
             ],
             "index/": [
-                {}
+                {
+                    "name": "index"
+                }
             ],
             "loginAction?": [
                 {
+                    "name": "login",
                     "path": "username=user{user_num}&password=password"
                 },
                 {
+                    "name": "logout",
                     "path": "logout="
                 }
             ],
             "order/": [
-                {}
+                {
+                    "name": "getOrderDetails"
+                }
             ],
             "product?": [
                 {
+                    "name": "getProductById",
                     "path": "id={product_id}"
                 }
             ],
             "profile/": [
-                {}
+                {
+                    "name": "profile"
+                }
             ]
         }
     }
