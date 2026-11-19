@@ -80,3 +80,22 @@ To insert the service demands:
 
 On top of that, the results of 10 TeaStore experiment runs are contained as well as a visualization comparing the real application with the simulation.
 
+## Cite Us
+
+When using any of the contents of this repository, please cite the following publication:
+
+```BibTeX
+@article{SeyfarthFK25,
+  author       = {Elijah Seyfarth and Sebastian Frank and J{\'{o}}akim von Kistowski},
+  title        = {{Extracting Reusable Service Demands for TeaStore}},
+  journal      = {Softwaretechnik-Trends},
+  volume       = {45},
+  number       = {4},
+  pages        = {47--49},
+  year         = {2025},
+  url          = {https://fb-swt.gi.de/fileadmin/FB/SWT/Softwaretechnik-Trends/Verzeichnis/Band\_45\_Heft\_4/SSP25\_paper\_13.pdf},
+  timestamp    = {Mon, 22 Dec 2025 17:03:50 +0100},
+  biburl       = {https://dblp.org/rec/journals/stt/SeyfarthFK25.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
